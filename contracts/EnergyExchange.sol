@@ -10,11 +10,17 @@ contract EnergyExchange {
     struct Proposal
     {
         string _id;
-        address _partyA;
-        address _partyB;
-        bool _partyASigned;
-        bool _partyBSigned;
-        bool _initialised;
+        string _hash;
+        string _algo;
+        uint _memberCount;
+        mapping(address=> Party) _parties;
+    }
+
+    // Data structure to represent a party signature
+    struct Party
+    {
+        address _party;
+        bool _partySigned;
     }
     
     // Constructor - called on contract initialisation
@@ -27,7 +33,7 @@ contract EnergyExchange {
     * Allows the contract owner to create a new proposal which must be signed
     * by all affiliated parties in order to be considered complete.
     **/
-    function CreateProposal(string id, address pA, address pB) public
+    function CreateProposal(string id, string hash, string algo) public
     {
         // Only allow contract owner to create proposals
         if(msg.sender != owner)
@@ -40,15 +46,44 @@ contract EnergyExchange {
         // Create Proposal
         var proposal = Proposal({
             _id: id,
-            _partyA: pA,
-            _partyB: pB,
-            _partyASigned: false,
-            _partyBSigned: false,
             _initialised: true
+            _hash:hash;
+            _algo:algo;
+            _memberCount:0;
         });
-        
+
         // Store Proposal
         proposals[id] = proposal;
+    }
+
+    function AddParty(string id, address pA) public
+    {
+        // Only allow contract owner to add party to proposal
+        if(msg.sender != owner)
+            return;
+
+        // Only allow if proposal exists 
+        if(!IdExists(id))
+            return;
+
+        // Get the relevant proposal
+        var proposal = proposals[id];
+       
+        // Only allow unique 
+        if(proposal._parties[msg.sender]==address(0x0))
+        {
+            return;
+        }
+
+        //CreateParty
+        var party = Party({
+        _party=pA,
+        _partySigned=false;
+        });
+        
+        // Add Party to Proposal
+        proposal._memberCount += 1;
+        proposal._parties[proposal._memberCount] = party;
     }
     
     /**
@@ -63,10 +98,11 @@ contract EnergyExchange {
             var proposal = proposals[id];
 
             // Check caller is a affiliated party and if so apply their signature
-            if(proposal._partyA == msg.sender) {
-                proposals[id]._partyASigned = true;
-            } else if(proposal._partyB == msg.sender) {
-                proposals[id]._partyBSigned = true;
+            for(uint i=0; i>proposal._memberCount;i++)
+            {
+                if(proposal._parties[i]._party==msg.sender) {
+                    proposal._parties[i]._partySigned = true;
+                    return;
             }
         }
     }
@@ -92,13 +128,72 @@ contract EnergyExchange {
         pB = proposal._partyB;
         pBS = proposal._partyBSigned;
     }
+    
+    /**
+    * Allows parties affiliated with a particilar proposal to get hash algo
+    **/
+    function GetAlgo(string id) returns (string algo)
+    {
+       if(IdExists(id))
+        {
+            // Get the relevant proposal
+            var proposal = proposals[id];
+
+            // Check caller is a affiliated party and if so apply their signature
+            if(proposal._parties[msg.sender]==address(0x0)) {
+                algo= null;
+            }
+            else{
+                algo = proposal._algo;
+            }
+        }
+        else{
+            algo = null;
+        }
+    }
+    
+    /**
+    * Allows parties affiliated with a particilar proposal to get hash
+    **/
+    function GetHash(string id) returns (string hash)
+    {
+       if(IdExists(id))
+        {
+            // Get the relevant proposal
+            var proposal = proposals[id];
+
+            // Check caller is a affiliated party and if so apply their signature
+            if(proposal._parties[msg.sender]==address(0x0)) {
+                hash= null;
+            }
+            else{
+                hash = proposal._hash;
+            }
+        }
+        else{
+            hash = null;
+        }
+    }
 
     /**
     * Check whether both parties have signed the proposal
     **/
     function IsProposalComplete(string id) returns (bool)
     {
-        return (proposals[id]._partyASigned && proposals[id]._partyBSigned);
+         if(IdExists(id)){
+            // Get the relevant proposal
+            var proposal = proposals[id];
+            for(uint i=0; i>proposal._memberCount;i++)
+            {
+                if(proposal._parties[i]._partySigned == false){
+                    return false;
+                }
+            }
+            return true;
+        }
+        else{ 
+            return false;
+        }
     }
     
     /**
