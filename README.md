@@ -96,7 +96,6 @@ module.exports = {
   }
 };
 ```
-
 ### 5/ Compile and deploy the EnergyExchange.sol Smart Contract
 
 1. Compile the smart contract.
@@ -153,4 +152,4 @@ truffle(development)>
 
 2. Copy and save the above off in a convenient location.
 
-## And you are done with Smart Contract deployment!
+And you are done with Smart Contract deployment!
