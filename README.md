@@ -71,7 +71,7 @@ PS C:\Users\azureuser\repos\EnergyExchange> cd contracts
 PS C:\Users\azureuser\repos\EnergyExchange\contracts> notepad EnergyExchange.sol
 ```
 
-4. Copy contents of EnergyExchange.sol from https://github.com/david-goon/ethereum-smartcontract and save the notepad file.
+4. Copy contents of EnergyExchange.sol from https://raw.githubusercontent.com/mormond/ethereum-smartcontract/v0.1/contracts/EnergyExchange.sol and save the notepad file.
 
 ### 4/ Make changes to Truffle configuration to deploy correctly
 
@@ -88,7 +88,7 @@ module.exports = function(deployer) {
   deployer.deploy(EnergyExchange);
 ```
 
-2. Modify truffle.js in the project root to point to the ...founder-public-ip address.
+2. Modify truffle.js in the project root to point to the [consortiumName]-founder-public-ip address.
 ```
 module.exports = {
   networks: {
