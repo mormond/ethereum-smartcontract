@@ -20,7 +20,7 @@ Deployment of a Smart Contract assumes that the Ethereum-based blockchain is up 
 azureuser@xd-founder-n-tx000000:~$ sudo docker ps
 CONTAINER ID        IMAGE                      COMMAND                  CREATED             STATUS              PORTS                                                                                  NAMES
 3331e7ec1fe6        mormond/geth-node:latest   "pm2 start --no-da..."   3 days ago          Up 3 days           0.0.0.0:8545-8546->8545-8546/tcp, 0.0.0.0:30303->30303/tcp, 0.0.0.0:30303->30303/udp   eth-node
-azureuser@xd-founder-n-tx000000:~$ sudo docker exec -it "3331e7ec1fe6" bash
+ azureuser@xd-founder-n-tx000000:~$ sudo docker exec -it "3331e7ec1fe6" bash
 eth-node@xd-founder-n-tx000000-c:~$ cd ~/.geth
 ```
 
@@ -52,12 +52,12 @@ true
 >
 ```
 
-###3/ Obtain the EnergyExchange.sol Smart Contract 
+### 3/ Obtain the EnergyExchange.sol Smart Contract 
 
 1. Connect to the DevVM jump box via RDP.
 2. Start a PowerShell session.
 3. Run the following commands to create a new project.
-```
+````
 PS C:\Users\vmadmin> md Projects
 PS C:\Users\vmadmin> cd Projects
 PS C:\Users\vmadmin\projects> truffle init
@@ -67,7 +67,7 @@ PS C:\Users\vmadmin\projects\contracts> notepad EnergyExchange.sol
 
 4. Copy contents of EnergyExchange.sol from https://github.com/david-goon/ethereum-smartcontract and save the notepad file.
 
-###4/ Make changes to Truffle configuration to deploy correctly
+`### 4/ Make changes to Truffle configuration to deploy correctly
 
 1. Modify migrations/deploy_contracts.js to specify you want to deploy EnergyExchange.sol during the migration. 
 ```
@@ -93,8 +93,8 @@ module.exports = {
     }
   }
 };
-
-###5/ Compile and deploy the EnergyExchange.sol Smart Contract
+```
+### 5/ Compile and deploy the EnergyExchange.sol Smart Contract
 
 1. Compile the smart contract.
 ```
@@ -124,7 +124,7 @@ Saving artifacts...
 PS C:\users\azureuser\repos\EnergyExchange>
 ```
 
-###6/ Collect information needed by the applications that will be calling the Smart Contract
+### 6/ Collect information needed by the applications that will be calling the Smart Contract
 
 1. Use the Truffle console to verify the Smart Contract address and Application Binary Interface (ABI).
 ```
@@ -148,4 +148,6 @@ e":"address"},{"name":"pBS","type":"bool"}],"payable":false,"type":"function"},{
 truffle(development)>
 ```
 
-And you are done with Smart Contract deployment!
+2. Copy and save the above off in a convenient location.
+
+## And you are done with Smart Contract deployment!
