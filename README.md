@@ -23,8 +23,16 @@ CONTAINER ID        IMAGE                      COMMAND                  CREATED 
  azureuser@xd-founder-n-tx000000:~$ sudo docker exec -it "3331e7ec1fe6" bash
 eth-node@xd-founder-n-tx000000-c:~$ cd ~/.geth
 ```
+2. Upload the keyfile to a location accessible by the Tx node
+ * The keyfile needs to be installed on the transaction node to allow transactions to be signed
+ * __The approach described here is not secure. We initially envisaged using KeyVault to store the keyfile secrets and distributing them to nodes but we did not prioritise this approach for the hackathon__
+ * Upload the keyfile to a location accessible via https, eg Azure Storage
+ * Navigate to the Azure Portal, create a storage account and a new blob container
+ * Upload the keyfile to the container and set the Access Policy to 'Blob' to allow (temporary) read access for anyone
+ * Copy the URL to access the blob from the properties in the Azure Portal for use below
+ * Once you've deployed the keyfile to the transaction node (next step, below), set the Access Policy back to 'Private'
 
-2. Obtain the account keyfile that was created using EtherWallet in the previous setup and deploy it to the transaction node.
+3. Deploy the keyfile to the transaction node.
 ```
 eth-node@xd-founder-n-tx000000-c:~/.geth$ curl -O https://meobucket.blob.core.windows.net/ethereum/6D0D451A-D203-4FC3-93A0-EA193D7A12C4.txt && mv 6D0D451A-D203-4FC3-93A0-EA193D7A12C4.txt keystore
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -45,7 +53,7 @@ modules: admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpo
 ["0x26851571ec7a14209a5144b516798cbcde2a5c65"]
 ```
 
-3. Unlock the account so we can deploy the Smart Contract using it.
+4. Unlock the account so we can deploy the Smart Contract using it.
 ```
 >  personal.unlockAccount(eth.accounts[0],"AbcAbc123123!",0)
 true
