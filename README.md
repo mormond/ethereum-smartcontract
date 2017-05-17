@@ -57,7 +57,7 @@ true
 1. Connect to the DevVM jump box via RDP.
 2. Start a PowerShell session.
 3. Run the following commands to create a new project.
-````
+```
 PS C:\Users\vmadmin> md Projects
 PS C:\Users\vmadmin> cd Projects
 PS C:\Users\vmadmin\projects> truffle init
@@ -67,7 +67,7 @@ PS C:\Users\vmadmin\projects\contracts> notepad EnergyExchange.sol
 
 4. Copy contents of EnergyExchange.sol from https://github.com/david-goon/ethereum-smartcontract and save the notepad file.
 
-`### 4/ Make changes to Truffle configuration to deploy correctly
+### 4/ Make changes to Truffle configuration to deploy correctly
 
 1. Modify migrations/deploy_contracts.js to specify you want to deploy EnergyExchange.sol during the migration. 
 ```
@@ -94,6 +94,7 @@ module.exports = {
   }
 };
 ```
+
 ### 5/ Compile and deploy the EnergyExchange.sol Smart Contract
 
 1. Compile the smart contract.
