@@ -8,10 +8,10 @@ Deployment of a Smart Contract assumes that the Ethereum-based blockchain is up 
 ## Steps to deploy the EnergyExchange.sol Solidity Smart Contract
 ### 1/ Prepare transaction node to allow SSH console session
 
-1. On the blockchain deployment, look for ...founder-public-ip and record its IP Address.
+1. On the blockchain deployment, look for [consortiumName]-founder-public-ip and record its IP Address.
 2. You should have a private key matched to sshPublicKey from the ethereum-consortium-orchestration setup steps.
 3. Add this to putty.exe for authentication.
-4. Connect to the ...founder-public-ip with putty.exe and log in with the user name and passphrase created during setup.
+4. Connect to the [consortiumName]-founder-public-ip with putty.exe and log in with the user name and passphrase created during setup.
 
 ### 2/ Install the default blockchain account and unlock it for contract deployment
 
@@ -19,19 +19,23 @@ Deployment of a Smart Contract assumes that the Ethereum-based blockchain is up 
 ```
 azureuser@xd-founder-n-tx000000:~$ sudo docker ps
 CONTAINER ID        IMAGE                      COMMAND                  CREATED             STATUS              PORTS                                                                                  NAMES
-3331e7ec1fe6        mormond/geth-node:latest   "pm2 start --no-da..."   3 days ago          Up 3 days           0.0.0.0:8545-8546->8545-8546/tcp, 0.0.0.0:30303->30303/tcp, 0.0.0.0:30303->30303/udp   eth-node
- azureuser@xd-founder-n-tx000000:~$ sudo docker exec -it "3331e7ec1fe6" bash
+3331e7ec1fe6        reponame/geth-node:latest   "pm2 start --no-da..."   3 days ago          Up 3 days           0.0.0.0:8545-8546->8545-8546/tcp, 0.0.0.0:30303->30303/tcp, 0.0.0.0:30303->30303/udp   eth-node
+
+azureuser@xd-founder-n-tx000000:~$ sudo docker exec -it "3331e7ec1fe6" bash
 eth-node@xd-founder-n-tx000000-c:~$ cd ~/.geth
 ```
 
 2. Obtain the account keyfile that was created using EtherWallet in the previous setup and deploy it to the transaction node.
 ```
-eth-node@xd-founder-n-tx000000-c:~/.geth$ curl -O https://meobucket.blob.core.windows.net/ethereum/6D0D451A-D203-4FC3-93A0-EA193D7A12C4.txt && mv 6D0D451A-D203-4FC3-93A0-EA193D7A12C4.txt keystore
+eth-node@xd-founder-n-tx000000-c:~/.geth$ curl -O https://somename.blob.core.windows.net/ethereum/keyfilename.txt && mv keyfilename.txt keystore
+
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100   489  100   489    0     0   1289      0 --:--:-- --:--:-- --:--:--  1290
+
 eth-node@xd-founder-n-tx000000-c:~/.geth$ ls keystore
 6D0D451A-D203-4FC3-93A0-EA193D7A12C4.txt
+
 eth-node@xd-founder-n-tx000000-c:~/.geth$ geth attach ipc:geth.ipc
 Welcome to the Geth JavaScript console!
 
@@ -47,7 +51,7 @@ modules: admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpo
 
 3. Unlock the account so we can deploy the Smart Contract using it.
 ```
->  personal.unlockAccount(eth.accounts[0],"AbcAbc123123!",0)
+>  personal.unlockAccount(eth.accounts[0],"[YourPassphrase]",0)
 true
 >
 ```
