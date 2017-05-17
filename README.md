@@ -58,11 +58,13 @@ true
 2. Start a PowerShell session.
 3. Run the following commands to create a new project.
 ```
-PS C:\Users\vmadmin> md Projects
-PS C:\Users\vmadmin> cd Projects
-PS C:\Users\vmadmin\projects> truffle init
-PS C:\Users\vmadmin\projects> cd contracts
-PS C:\Users\vmadmin\projects\contracts> notepad EnergyExchange.sol
+PS C:\Users\azureuser> md Repos
+PS C:\Users\azureuser> cd Repos
+PS C:\Users\azureuser\repos> md EnergyExchange
+PS C:\Users\azureuser\repos> cd EnergyExchange
+PS C:\Users\azureuser\repos\EnergyExchange> truffle init
+PS C:\Users\azureuser\repos\EnergyExchange> cd contracts
+PS C:\Users\azureuser\repos\EnergyExchange\contracts> notepad EnergyExchange.sol
 ```
 
 4. Copy contents of EnergyExchange.sol from https://github.com/david-goon/ethereum-smartcontract and save the notepad file.
