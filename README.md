@@ -27,12 +27,13 @@ eth-node@xd-founder-n-tx000000-c:~$ cd ~/.geth
  * The keyfile needs to be installed on the transaction node to allow transactions to be signed
  * __The approach described here is not secure. We envisage using KeyVault to store the keyfile secrets and distributing them to nodes but we did not prioritise this approach for the hackathon__
  * Upload the keyfile to a location accessible via https, eg Azure Storage
- * Navigate to the Azure Portal, create a storage account and a new blob container
- * Upload the keyfile to the container
- * Either
-   * Set the Access Policy to 'Blob' to allow (temporary) read access for anyone
-   * For added security, set the Access Policy to 'Private' and generate a Shared access signature to grant access 
- * Copy the URL to access the blob from the properties in the Azure Portal for use below
+   * For more details on Azure Storage, see https://docs.microsoft.com/en-us/azure/storage/storage-introduction 
+   * Navigate to the Azure Portal, create a storage account and a new blob container
+   * Upload the keyfile to the container
+   * Either
+     * Set the Access Policy to 'Blob' to allow (temporary) read access for anyone
+     * For added security, set the Access Policy to 'Private' and generate a Shared access signature to grant access
+   * Copy the URL to access the blob from the properties in the Azure Portal for use below
  * Once you've deployed the keyfile to the transaction node (next step, below), set the Access Policy back to 'Private' and / or delete the keyfile from blob storage
 
 3. Deploy the keyfile to the transaction node.
